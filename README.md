@@ -7,4 +7,3 @@
 - [Website: Invert Image Colors](https://pinetools.com/invert-image-colors)
 - [Reveal (Dark v1.0)](reveal/template1.md)
 
-## Letters
