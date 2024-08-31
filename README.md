@@ -6,4 +6,5 @@
 - [Google Slides (Dark v1.0)](https://docs.google.com/presentation/d/1Wt4WZOTX8c_ZpDMFx16zGgvPOfdXkbwxaprW4xNe9ko/edit?usp=sharing)
 - [Website: Invert Image Colors](https://pinetools.com/invert-image-colors)
 - [Reveal (Dark v1.0)](reveal/template1.md)
+- [Typst Template for HKUST(GZ)](https://github.com/exAClior/touying-simpl-hkustgz)
 
