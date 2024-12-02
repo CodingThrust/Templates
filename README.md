@@ -1,4 +1,6 @@
 # Templates
+Note: these templates are tailored for researchers @ Hong Kong University of Sicence and Technology (Guangzhou), feel free to modify for other uses.
+
 ## Note taking
 - [Typst Example: Materials database](typst/notes/database)
 
