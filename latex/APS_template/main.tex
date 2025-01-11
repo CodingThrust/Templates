@@ -1,0 +1,103 @@
+% TeX'ing this file requires that you have AMS-LaTeX 2.0 installed
+% as well as the rest of the prerequisites for REVTeX 4.0
+%
+% See the REVTeX 4 README file
+% It also requires running BibTeX. The commands are as follows:
+%
+%  1)  latex apssamp.tex
+%  2)  bibtex apssamp
+%  3)  latex apssamp.tex
+%  4)  latex apssamp.tex
+%
+%\documentclass[prb,showkeys,preprintnumbers,amsmath,amssymb, 11pt]{revtex4}
+%\documentclass[preprint,showpacs,showkeys,preprintnumbers,amsmath,amssymb]{revtex4}
+
+% Some other (several out of many) possibilities
+%\documentclass[preprint,aps]{revtex4}
+%\documentclass[aps, two column, amsmath,amssymb,floatfix]{revtex4}
+%\documentclass[showkeys,showpacs,amsmath,amssymb,twocolumn,superscriptaddress,prl]{revtex4-1}% Physical Review B  
+\documentclass[aps,prl,reprint,showpacs,floatfix,superscriptaddress]{revtex4-2}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}% Include figure files
+\graphicspath{{submission/figs}}
+
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage{color}
+\usepackage{epsfig}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{epstopdf}
+\usepackage{subfigure}
+\usepackage{autobreak}
+
+
+
+%Macros for mathematical notations
+
+\newcommand{\V}[1]{\boldsymbol{#1}} %# vector
+\newcommand{\M}[1]{\boldsymbol{#1}} %# matrix
+\newcommand{\Set}[1]{\mathbb{#1}} %# set
+\newcommand{\D}[1]{\Delta#1} %# \D{t} for time step size
+\renewcommand{\d}[1]{\delta#1} %# \d{t} for small increment
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert } % norm
+\newcommand{\abs}[1]{\left|#1\right|} %abs
+
+\newcommand{\grad}{\M{\nabla}} %gradient
+\newcommand{\av}[1]{\left\langle #1\right\rangle } %take average
+
+\newcommand{\sM}[1]{\M{\mathcal{#1}}} %matrix in mathcal font
+\newcommand{\dprime}{\prime\prime} % double prime
+%\global\long\def\i{\iota}
+%\renewcommand{\i}{\iota} %i for imaginary unit
+%\renewcommand{\i}{\mathsf i} %i for imaginary unit
+\newcommand{\follows}{\quad\Rightarrow\quad} %=>
+\newcommand{\eqd}{\overset{d}{=}} %=^d
+\newcommand{\spe}[1]{\mathscr{#1}}  %important quantities in mathscr font
+\newcommand{\eps}{\epsilon}
+\usepackage{color}
+\newcommand{\rev}[1] {{\color{blue}#1}}
+\newcommand{\gao}[1] {{\color{red}{\textit{xz comment}}: \color{red}#1}}
+
+\begin{document}
+\preprint{Preprint}
+
+\title{Title}
+
+\author{}
+\email{}
+\affiliation{Thrust of Advanced Materials, The Hong Kong University of Science and Technology (Guangzhou), Guangdong, China}
+
+\author{Zecheng Gan} \thanks{Corresponding author}
+\email{zechenggan@ust.hk}
+\affiliation{Thrust of Advanced Materials, The Hong Kong University of Science and Technology (Guangzhou), Guangdong, China}
+\affiliation{Department of Mathematics, The Hong Kong University of Science and Technology, Hong Kong SAR, China}
+
+\date{\today}
+
+%%%%% Begin Abstract %%%%%%%%%%%
+\begin{abstract}
+
+\end{abstract}
+
+%%%%% end %%%%%%%%%%%
+
+%%%%% AMS/PACs/Keywords %%%%%%%%%%%
+%\pacs{no longer needed}
+
+%\keywords{ }
+%%%% maketitle %%%%%
+\maketitle
+
+%%%% Start %%%%%%
+
+
+
+\bibliography{groupbib}
+
+
+
+\end{document}

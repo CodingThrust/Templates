@@ -1,0 +1,83 @@
+% SIAM Article Template
+\documentclass[review,onefignum,onetabnum]{siamart190516}
+
+\newcommand{\V}[1]{\boldsymbol{#1}} %# vector
+\newcommand{\M}[1]{\boldsymbol{#1}} %# matrix
+\newcommand{\Set}[1]{\mathbb{#1}} %# set
+\newcommand{\D}[1]{\Delta#1} %# \D{t} for time step size
+\renewcommand{\d}[1]{\delta#1} %# \d{t} for small increment
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert } % norm
+\newcommand{\abs}[1]{\left|#1\right|} %abs
+
+\newcommand{\grad}{\M{\nabla}} %gradient
+\newcommand{\av}[1]{\left\langle #1\right\rangle } %take average
+
+\newcommand{\sM}[1]{\M{\mathcal{#1}}} %matrix in mathcal font
+\newcommand{\dprime}{\prime\prime} % double prime
+%\global\long\def\i{\iota}
+%\renewcommand{\i}{\iota} %i for imaginary unit
+%\renewcommand{\i}{\mathsf i} %i for imaginary unit
+\newcommand{\follows}{\quad\Rightarrow\quad} %=>
+\newcommand{\eqd}{\overset{d}{=}} %=^d
+\newcommand{\spe}[1]{\mathscr{#1}}  %important quantities in mathscr font
+\newcommand{\eps}{\epsilon}
+
+
+% Information that is shared between the article and the supplement
+% (title and author information, macros, packages, etc.) goes into
+% ex_shared.tex. If there is no supplement, this file can be included
+% directly.
+
+\input{ex_shared}
+\usepackage { graphicx,epstopdf } % <- Preamble 
+\usepackage[caption=false] { subfig }
+
+% Optional PDF information
+\ifpdf
+\hypersetup{
+  pdftitle={},
+  pdfauthor={Name, and Name}
+}
+\fi
+
+% The next statement enables references to information in the
+% supplement. See the xr-hyperref package for details.
+
+\externaldocument{ex_supplement}
+
+% FundRef data to be entered by SIAM
+%<funding-group specific-use="FundRef">
+%<award-group>
+%<funding-source>
+%<named-content content-type="funder-name"> 
+%</named-content> 
+%<named-content content-type="funder-identifier"> 
+%</named-content>
+%</funding-source>
+%<award-id> </award-id>
+%</award-group>
+%</funding-group>
+
+\begin{document}
+
+\maketitle
+
+% REQUIRED
+\begin{abstract}
+  
+\end{abstract}
+
+% REQUIRED
+\begin{keywords}
+  
+\end{keywords}
+
+% REQUIRED
+\begin{AMS}
+
+\end{AMS}
+
+
+\bibliographystyle{siamplain}
+\bibliography{references}
+\end{document}
