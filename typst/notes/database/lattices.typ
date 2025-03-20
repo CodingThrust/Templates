@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.2.2": canvas, draw, tree, vector
+#import "@preview/cetz:0.3.4": canvas, draw, tree, vector
 
 #let norm(a) = calc.sqrt(a.map(a=>a*a).sum())
 #let normalize(a) = {

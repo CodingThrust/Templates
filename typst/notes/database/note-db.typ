@@ -1,5 +1,5 @@
-#import "@preview/cetz:0.2.2": canvas, draw, tree, vector
-#import "@preview/grape-suite:1.0.0": exercise
+#import "@preview/cetz:0.3.4": canvas, draw, tree, vector
+#import "@preview/grape-suite:2.0.0": exercise
 #import "lattices.typ": unitcell
 #import exercise: project, task, subtask
 
@@ -17,6 +17,7 @@
 #show raw.where(lang:"python"): it=>{
   par(justify:false,block(fill:rgb("#f0fef0"),inset:1.5em,width:99%,text(it)))
 }
+
 
 #pagebreak()
 
@@ -246,9 +247,7 @@ $bold(k)$ has discrete values, just like $n, l, m$ have discrete values. They li
 By walking through high symmetry points (e.g. $Gamma$, $X$, $W$, $K$, $L$ below), we get the band structure.
 Although the band looks continuous, it is actually a series of many discrete energy levels. By counting the number of energy levels at each energy value, we get the density of states.
 
-
-#figure(grid(columns: 2, gutter: 20pt,
-  align(horizon, canvas(length: 0.8cm,
+#figure(canvas(length: 0.8cm,
     {
       import draw: *
       content((),image("images/2024-10-20-12-39-56.png", width: 120pt), caption: [Band structure of CaTiO₃. (Image source: The Materials Project)])
@@ -259,16 +258,12 @@ Although the band looks continuous, it is actually a series of many discrete ene
       content((-0.2, 0), [$Gamma$])
       content((0.5, 0.8), [$U$])
       content((0, -4.3), [(a)])
-    }
-  )),
-  canvas({
-    import draw: *
-    content((),image("images/2024-10-20-12-46-26.png", width: 330pt))
+      set-origin((10, 0))
+    content((0, 0),image("images/2024-10-20-12-46-26.png", width: 330pt))
     line((-2.07, 1.1), (-2.07, -0.2), mark: (start: "straight", end: "straight"), name: "gap")
     content((rel: (0.8, 0.0), to: "gap.mid"), "Band gap")
     content((0, -3), [(b)])
-  }),
-), caption: [The electronic properties of NaCl. (a) The Brillouin zone. (b) The band structure and density of states.]) <fig:bandstructure>
+  }), caption: [The electronic properties of NaCl. (a) The Brillouin zone. (b) The band structure and density of states.]) <fig:bandstructure>
 
 = Case study: CaTiO₃
 Calcium titanate (CaTiO₃) is Orthorhombic Perovskite structured. The material ID is `mp-4019`: https://next-gen.materialsproject.org/materials/mp-4019
@@ -304,7 +299,7 @@ The space group description of CaTiO₃ is:
 
 The international number, Hall number, and Symbol are different ways to represent the same space group. 
 With the following information, we can visualize the crystal structure.
-#align(center, grid(columns:2, table(columns: (auto, auto),
+#grid(columns:2, table(columns: (auto, auto),
 table.header(
   table.cell(fill: green.lighten(60%))[*Lattice \ Parameters*],
   table.cell(fill: green.lighten(60%))[*Values*],
@@ -315,7 +310,7 @@ table.header(
 [$alpha$], [$90.00 degree$],
 [$beta$], [$90.00 degree$],
 [$gamma$], [$90.00 degree$],
-), [#unitcell("orthorhombic")], gutter: 68pt))
+), [#unitcell("orthorhombic")], gutter: 68pt)
 
 #align(center, table(columns: (auto, auto, auto, auto, auto),
   table.header(
@@ -332,8 +327,6 @@ table.header(
 ))
 
 Please refer to #link("https://opengeology.org/Mineralogy/10-crystal-morphology-and-symmetry/")[Crystal morphology and symmetry] for more details.
-
-
 
 // #figure(image("LaNiO3.png"), caption: [The Material Details Page])
 
