@@ -1,13 +1,14 @@
-#import "@preview/touying:0.4.2": *
-#import "@preview/touying-simpl-hkustgz:0.1.0" as hkustgz-theme
-#import "@preview/cetz:0.2.2": canvas, draw, tree, plot
-#import "@preview/quill:0.5.0": *
-#import "@preview/physica:0.9.3": *
-#import "@preview/pinit:0.1.3": *
-#import "@preview/colorful-boxes:1.2.0": *
+#import "@preview/touying:0.6.1": *
+#import "@preview/touying-simpl-hkustgz:0.1.2": *
+#import "@preview/cetz:0.4.1": canvas, draw, tree
+#import "@preview/cetz-plot:0.1.2": plot
+#import "@preview/quill:0.7.1": *
+#import "@preview/physica:0.9.5": *
+#import "@preview/pinit:0.2.2": *
+#import "@preview/colorful-boxes:1.4.3": *
 
 #set cite(style: "apa")
-#let s = hkustgz-theme.register()
+
 #let ket(x) = $|#x angle.r$
 #let globalvars = state("t", 0)
 #let timecounter(minutes) = [
@@ -88,23 +89,17 @@
 
 
 // Global information configuration
-#let s = (s.methods.info)(
-  self: s,
-  title: [Tensor network based quantum simulation with Yao.jl],
-  subtitle: [(\@ Lausanne)],
-  author: [Jin-Guo Liu (GiggleLiu)],
-  date: datetime.today(),
-  institution: [HKUST(GZ) - FUNH - Advanced Materials Thrust],
+#show: hkustgz-theme.with(
+  config-info(
+    title: [Tensor network based quantum simulation with Yao.jl],
+    subtitle: [(\@ Lausanne)],
+    author: [Jin-Guo Liu (GiggleLiu)],
+    date: datetime.today(),
+    institution: [HKUST(GZ) - FUNH - Advanced Materials Thrust],
+  ),
 )
 
-// Extract methods
-#let (init, slides) = utils.methods(s)
-#show: init
-
-// Extract slide functions
-#let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
-#show: slides.with()
-
+#title-slide()
 #outline-slide()
 
 = Yao \@ v0.9 - What's new?

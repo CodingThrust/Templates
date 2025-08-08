@@ -1,5 +1,5 @@
-#import "@preview/cetz:0.3.4": canvas, draw, tree, vector
-#import "@preview/grape-suite:2.0.0": exercise
+#import "@preview/cetz:0.4.1": canvas, draw, tree, vector
+#import "@preview/grape-suite:3.1.0": exercise
 #import "lattices.typ": unitcell
 #import exercise: project, task, subtask
 

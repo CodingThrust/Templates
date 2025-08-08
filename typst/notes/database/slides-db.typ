@@ -1,8 +1,8 @@
-#import "@preview/touying:0.4.2": *
-#import "@preview/touying-simpl-hkustgz:0.1.0" as hkustgz-theme
-#import "@preview/cetz:0.2.2": canvas, draw, tree, decorations, vector, coordinate, plot
-#import "@preview/quill:0.3.0": *
-#import "@preview/pinit:0.1.3": *
+#import "@preview/touying:0.6.1": *
+#import "@preview/touying-simpl-hkustgz:0.1.2": *
+#import "@preview/cetz:0.4.1": canvas, draw, tree, decorations, vector, coordinate
+#import "@preview/quill:0.7.1": *
+#import "@preview/pinit:0.2.2": *
 #import "@preview/algorithmic:0.1.0"
 #import "lattices.typ": unitcell
 #import algorithmic: algorithm
@@ -13,7 +13,6 @@
 
 #set cite(style: "apa")
 
-#let s = hkustgz-theme.register()
 #let ket(x) = $|#x angle.r$
 #let bra(x) = $angle.l #x|$
 #let braket(x, y) = $angle.l #x|#y angle.r$
@@ -25,15 +24,6 @@
     content((), text(blue)[[JG: #txt]])
   })
 }
-// Global information configuration
-#let s = (s.methods.info)(
-  self: s,
-  title: box(width: 70%)[Materials simulation],
-  subtitle: [Lecture 1: Materials Databases],
-  author: [Jin-Guo Liu],
-  date: datetime.today(),
-  institution: [HKUST(GZ) - FUNH - AMAT],
-)
 
 #let rand(base, seed:666) = {
   let a = 1103515245
@@ -68,13 +58,19 @@
   content((8, 4), [$arrow.double.l$ Boundary\ #h(13pt) (periodic or closed)])
 })
 
-// Extract methods
-#let (init, slides) = utils.methods(s)
-#show: init
+#show: hkustgz-theme.with(
+  config-info(
+    title: [Materials simulation],
+    subtitle: [Lecture 1: Materials Databases],
+    author: [Jin-Guo Liu],
+    date: datetime.today(),
+    institution: [HKUST(GZ) - FUNH - AMAT],
+  ),
+)
 
-// Extract slide functions
-#let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
-#show: slides.with()
+#title-slide()
+
+#outline-slide()
 
 #let question(txt) = {
   align(center, box(width: 80%, fill: blue.lighten(80%), inset: 15pt)[#text(blue.darken(50%))[*Q:*] #txt])

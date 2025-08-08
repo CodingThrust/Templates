@@ -1,11 +1,15 @@
+// Enhanced timetable template with modern Typst features
+#set page(margin: 1cm)
+#set text(font: "Arial", lang: "zh")
+
 #align(center)[
   #block(spacing: 1.5em)[
-    #text(size: 30pt, weight: "bold", font: "Arial")[JuliaCN 2024 见面会]
-		#v(3em)
+    #text(size: 30pt, weight: "bold")[JuliaCN 2024 见面会]
+    #v(3em)
   ]
 ]
 
-#align(center, text(size: 10pt,font: "Arial")[
+#align(center, text(size: 10pt)[
   #figure(table(
     columns: (auto, auto, auto, auto),
     table.header(

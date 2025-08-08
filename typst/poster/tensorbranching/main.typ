@@ -1,6 +1,6 @@
-#import "@preview/peace-of-posters:0.5.0" as pop
-#import "@preview/cetz:0.2.2": canvas, draw, tree, plot
-#import "@preview/pinit:0.1.3": *
+#import "@preview/peace-of-posters:0.5.6" as pop
+#import "@preview/cetz:0.4.1": canvas, draw, tree
+#import "@preview/pinit:0.2.2": *
 
 
 #show link: set text(blue)
@@ -20,7 +20,7 @@
   $""^*$Advanced Materials Thrust, Function Hub, Hong Kong University of Science and Technology (Guangzhou)\
   $""^dagger$CAS Key Laboratory for Theoretical Physics, Institute of Theoretical Physics, Chinese Academy of Sciences
   ],
-  image: image("amat-dark.png", width: 150%),
+  logo: image("amat-dark.png", width: 150%),
   title-size: 1.5em,
 )
 
