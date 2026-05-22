@@ -1,0 +1,12 @@
+{
+  "name": "research-convensions",
+  "description": "Reusable Claude Code / Codex skills for research workflows — literature synthesis, doc-site and slide-deck scaffolds, code review, repo hygiene, PR maintenance",
+  "version": "0.1.0",
+  "author": {
+    "name": "CodingThrust"
+  },
+  "homepage": "https://github.com/CodingThrust/Templates",
+  "repository": "https://github.com/CodingThrust/Templates",
+  "license": "MIT",
+  "keywords": ["research", "skills", "literature-review", "slides", "code-review"]
+}

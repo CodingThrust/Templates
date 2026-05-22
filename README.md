@@ -27,3 +27,24 @@ _Note_: For dark theme slides, you may also need the [Website: Invert Image Colo
 
 ## Miscellaneous
 - [Time table (typst)](typst/timetable)
+
+## Agent skills
+Reusable Claude Code / Codex skills for research workflows — literature synthesis, doc-site and slide-deck scaffolds, code review, repo hygiene, PR maintenance. See [`skills/`](skills/) for the inventory and install instructions.
+
+Install all skills as a Claude Code plugin:
+
+```
+/plugin marketplace add CodingThrust/Templates
+/plugin install research-convensions@research-convensions
+```
+
+Research workflow:
+- [`topic-report`](skills/topic-report) — turn `(topic, sources[])` into a single cited markdown report
+- [`report-writing`](skills/report-writing) — scaffold a neutral-academic documentation site (ink + terracotta on warm paper)
+- [`slide-writing`](skills/slide-writing) — compose a scroll-snapped two-column slide deck in the same neutral-academic palette
+
+Software practice:
+- [`repo-hygiene-audit`](skills/repo-hygiene-audit) — beginner-friendly repository health scorecard
+- [`review-implementation`](skills/review-implementation) — fresh-context code-review subagent for the current diff
+- [`fix-pr`](skills/fix-pr) — triage review comments, failing CI, and coverage gaps on the current PR
+- [`issue-to-pr`](skills/issue-to-pr) — turn a GitHub issue into a plan-only PR after brainstorming

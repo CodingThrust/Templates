@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Implementation"
+  short_description: "Dispatch a fresh-context subagent to review the current diff for design, tests, and API quality"
+  default_prompt: "Use $review-implementation to review the current code changes before committing."

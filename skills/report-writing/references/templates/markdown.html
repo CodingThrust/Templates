@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — {{SITE_TITLE}}</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a class="brand" href="index.html">
+        <span class="brand-name">{{SITE_SLUG}}<span class="sub">{{SITE_KIND}}</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Documents</a>
+        <a href="{{SOURCE_URL}}" class="nav-link external" target="_blank" rel="noopener">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="prose-nav">
+    <a class="back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      All documents
+    </a>
+  </nav>
+
+  <article class="prose">
+{{CONTENT}}
+  </article>
+
+  <footer>
+    <div class="footer-row">
+      <span>{{SITE_COPYRIGHT}}</span>
+      <span><a href="{{SOURCE_URL}}" target="_blank" rel="noopener">View source</a></span>
+    </div>
+  </footer>
+</body>
+</html>

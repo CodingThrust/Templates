@@ -1,0 +1,4 @@
+interface:
+  display_name: "Report Writing"
+  short_description: "Scaffold a neutral-academic documentation site — landing page, markdown prose, PDF viewers"
+  default_prompt: "Use $report-writing to scaffold or refresh a documentation site (ink + terracotta on warm paper)."

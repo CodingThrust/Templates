@@ -1,0 +1,4 @@
+interface:
+  display_name: "Topic Report"
+  short_description: "Collect a list of sources on a topic and synthesize a single cited report"
+  default_prompt: "Use $topic-report to gather what each source says about a topic and synthesize a single cited report."

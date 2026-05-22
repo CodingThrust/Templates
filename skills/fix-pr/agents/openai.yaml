@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix PR"
+  short_description: "Triage and address review comments, failing checks, and coverage gaps on the current PR"
+  default_prompt: "Use $fix-pr to address review feedback and failing checks on the current branch's pull request."

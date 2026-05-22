@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slide Writing"
+  short_description: "Compose a scroll-snapped two-column slide deck (ink + terracotta on warm paper) — logic flow first, then page-by-page design"
+  default_prompt: "Use $slide-writing to build a presentation. Start with the logic flow, then design each page."

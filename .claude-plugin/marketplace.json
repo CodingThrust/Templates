@@ -1,0 +1,14 @@
+{
+  "name": "research-convensions",
+  "owner": {
+    "name": "CodingThrust"
+  },
+  "plugins": [
+    {
+      "name": "research-convensions",
+      "description": "Reusable Claude Code / Codex skills for research workflows — literature synthesis, doc-site and slide-deck scaffolds, code review, repo hygiene, PR maintenance",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}

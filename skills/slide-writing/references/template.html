@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deck Title</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,ital,wght@8..60,0,300..700;8..60,1,300..700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Neutral academic deck — research-style, formal.
+     Two-column slides (figure left, commentary right), serif body,
+     warm-paper background, restrained chrome. Each .masthead /
+     section.spread is one scroll-snapped page.
+     Palette: near-black ink + terracotta accent on warm paper.
+     ============================================================ */
+  :root {
+    /* warm paper, near-white */
+    --paper:        #ffffff;
+    --paper-2:      #f1eee6;
+    --paper-bg:     #f8f7f4;
+    --rule:         #1a1a1a;
+    /* ink + terracotta palette */
+    --ink:          #1a1a1a;
+    --ink-2:        #3a3a3a;
+    --ink-3:        #828282;
+    --text:         #1c1c1c;
+    --text-soft:    #555555;
+    --accent:       #a55b3a;
+    --accent-soft:  #ecdbcd;
+    --accent-deep:  #8a4527;
+    --warning:      #b45309;
+    --success:      #15803d;
+    --hairline:     #c4bfb3;
+    --hairline-2:   #d9d6cf;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper-bg);
+    color: var(--text);
+    font-family: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* ===== top chrome ===== */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    height: 1.5px; background: transparent;
+  }
+  .scroll-progress .bar {
+    height: 100%; width: 0%; background: var(--ink);
+    opacity: .35;
+    transition: width .12s linear;
+  }
+  .brand-chip {
+    position: fixed; top: 14px; left: 18px; z-index: 50;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink); background: transparent;
+    border: 0;
+    padding: 0;
+    text-decoration: none;
+  }
+  .brand-chip img {
+    display: none;
+  }
+  .brand-chip strong { font-weight: 700; }
+  .brand-chip .sub { color: var(--text-soft); }
+  .top-tag {
+    position: fixed; top: 16px; right: 18px; z-index: 50;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3); background: transparent;
+    border: 0;
+    padding: 0;
+    transition: opacity .2s;
+  }
+
+  /* ===== bottom chrome ===== */
+  .page-indicator {
+    position: fixed; bottom: 16px; right: 18px; z-index: 50;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .2em;
+    color: var(--ink-3); background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .page-indicator .sep { color: var(--ink-3); margin: 0 4px; }
+  .nav-hint {
+    position: fixed; bottom: 16px; left: 18px; z-index: 50;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-3); background: transparent;
+    border: 0;
+    padding: 0;
+    transition: opacity .6s ease;
+  }
+  .nav-hint kbd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    border: 1px solid var(--ink);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 0 4px;
+    margin: 0 2px;
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+  .nav-hint.fade { opacity: 0; pointer-events: none; }
+  @media (max-width: 980px) {
+    .page-indicator, .nav-hint, .brand-chip { display: none; }
+  }
+
+  /* ===== document container ===== */
+  .doc, .masthead {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .masthead { padding-top: 88px; padding-bottom: 56px; }
+
+  /* ===== slide pages ===== */
+  .masthead,
+  section.spread {
+    margin-bottom: 100vh;
+    min-height: 100vh;
+    scroll-margin-top: 0;
+  }
+
+  /* ===== two-column spread: figure left, commentary right ===== */
+  .spread {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 56px;
+    padding: 72px 0 64px;
+    border-top: 1px solid var(--hairline);
+    align-items: start;
+  }
+  .masthead .spread {
+    border-top: 0;
+    padding-top: 0;
+    align-items: center;
+  }
+  .spread-fig { min-width: 0; }
+  .spread-text { min-width: 0; }
+
+  /* ===== figure box on the left ===== */
+  .figbox {
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 18px 0 14px;
+    border-radius: 0;
+  }
+  .figbox-head {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .figbox-head strong { color: var(--ink); font-weight: 600; }
+  .figbox svg, .figbox img {
+    display: block; width: 100%; height: auto; max-width: 100%;
+  }
+  .figbox-cap {
+    font-family: "Source Serif 4", serif;
+    font-size: 13.5px; line-height: 1.5; color: var(--text-soft);
+    margin: 14px 0 0;
+  }
+  .figbox-cap strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== masthead title ===== */
+  .mast-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 22px;
+  }
+  .mast-title {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 48;
+    font-weight: 460;
+    font-size: clamp(36px, 4.2vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -.012em;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+  .mast-title em {
+    font-style: italic;
+    font-weight: 460;
+  }
+  .mast-sub {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 28;
+    font-weight: 380; font-style: normal;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.5; color: var(--text-soft);
+    margin: 0 0 30px;
+    max-width: 56ch;
+  }
+  .mast-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--text-soft);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 38px;
+    display: flex; justify-content: space-between;
+  }
+  .mast-meta .dot {
+    width: 7px; height: 7px; background: var(--accent); border-radius: 50%;
+    display: inline-block; vertical-align: middle; margin-right: 6px;
+  }
+  .mast-byline {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .mast-byline strong { color: var(--ink); font-weight: 600; letter-spacing: .18em; }
+  .key-links a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+  .key-links a:hover {
+    color: var(--accent-deep);
+  }
+
+  /* ===== masthead brand mark (replaces the busy figure diagram) ===== */
+  .mast-mark {
+    display: grid;
+    place-items: center;
+    padding: 24px 0;
+  }
+  .mast-mark img {
+    width: min(220px, 60%);
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    opacity: .72;
+  }
+
+  /* ===== run text (title sits above figure on left; commentary on right) ===== */
+  .run-title {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 48;
+    font-weight: 420;
+    font-size: clamp(30px, 3.2vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -.018em;
+    margin: 0 0 22px;
+    color: var(--ink);
+  }
+  .run-title em {
+    font-style: italic;
+    font-weight: 380;
+  }
+  /* Title spans the full grid row above the figure + commentary columns. */
+  .spread > .run-title {
+    grid-column: 1 / -1;
+    margin: 0 0 32px;
+    max-width: none;
+  }
+  /* The right rail no longer carries the title — start its lead flush with the figbox top. */
+  .spread-text > .run-lead:first-child { margin-top: 4px; }
+  .run-lead {
+    font-size: 18px; line-height: 1.55; color: var(--ink-2);
+    margin: 0 0 18px;
+  }
+  .run-lead em { font-style: italic; color: var(--ink); }
+  .run-lead strong { color: var(--ink); font-weight: 600; }
+  .run-body {
+    font-size: 16px; line-height: 1.62; color: var(--text-soft);
+    margin: 0 0 16px;
+  }
+  .run-body em { font-style: italic; color: var(--ink); }
+  .run-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== pull-quote callout ===== */
+  .rail-pull {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 36;
+    font-style: italic; font-weight: 400;
+    font-size: 19px; line-height: 1.3;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: 18px;
+    margin: 22px 0;
+  }
+  .rail-pull.deep { border-color: var(--accent-deep); }
+  .rail-pull.ink  { border-color: var(--ink); }
+
+  .rail-callout {
+    background: transparent; border: 0;
+    border-left: 2px solid var(--hairline);
+    padding: 4px 0 4px 16px;
+    border-radius: 0;
+    margin: 20px 0;
+  }
+  .rail-callout .lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 8px;
+  }
+  .rail-callout .sub {
+    font-size: 13.5px; color: var(--text-soft); line-height: 1.5;
+  }
+  .rail-callout .big {
+    font-family: "Source Serif 4", serif;
+    font-weight: 380; font-size: 48px; line-height: 1;
+    letter-spacing: -.04em; color: var(--ink);
+    margin: 6px 0 8px;
+  }
+  .rail-callout .big em { color: var(--accent-deep); font-style: italic; }
+
+  /* ===== numbered spec list ===== */
+  ol.spec {
+    list-style: none; padding: 0; margin: 18px 0 0;
+    counter-reset: spec;
+  }
+  ol.spec li {
+    counter-increment: spec;
+    padding: 16px 0 16px 50px;
+    border-top: 1px solid var(--hairline);
+    position: relative;
+    font-size: 15.5px; line-height: 1.55;
+    color: var(--text-soft);
+  }
+  ol.spec li::before {
+    content: "0" counter(spec);
+    position: absolute; left: 0; top: 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600; font-size: 12px; letter-spacing: .12em;
+    color: var(--accent-deep);
+  }
+  ol.spec li:last-child { border-bottom: 1px solid var(--hairline); }
+  ol.spec li strong { color: var(--ink); font-weight: 600; }
+  ol.spec li em { font-style: italic; color: var(--ink); }
+  ol.spec li .tag {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 6px;
+  }
+
+  /* ===== stats grid ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 24px;
+    margin: 18px 0 4px;
+  }
+  .stats.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .stats.cols-1 { grid-template-columns: 1fr; }
+  .stat {
+    border-top: 1.5px solid var(--ink);
+    padding-top: 12px;
+  }
+  .stat .k {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 60;
+    font-weight: 380;
+    font-size: clamp(28px, 2.8vw, 40px);
+    line-height: 1;
+    letter-spacing: -.03em;
+    color: var(--ink);
+  }
+  .stat .k sup { font-size: .35em; vertical-align: top; color: var(--ink-2); margin-left: 4px; letter-spacing: 0; }
+  .stat .k em { color: var(--accent-deep); font-style: italic; }
+  .stat .lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3); margin-top: 6px;
+    line-height: 1.4;
+  }
+  .stat .lbl em { color: var(--ink); font-style: normal; }
+
+  /* ===== data table ===== */
+  table.data {
+    width: 100%; border-collapse: collapse;
+    font-family: "Source Serif 4", serif;
+  }
+  table.data th, table.data td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+  table.data thead th {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink); font-weight: 600;
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  table.data td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  table.data tr.group td {
+    background: rgba(47,47,127,.06);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink);
+    padding-top: 10px; padding-bottom: 6px;
+  }
+  table.data tfoot td {
+    border-top: 1.5px solid var(--ink);
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ===== effort / progress bar (split fill) ===== */
+  .effort {
+    display: inline-flex; height: 6px; width: 80px;
+    border: 1px solid var(--ink); overflow: hidden;
+    vertical-align: middle;
+  }
+  .effort .a { background: var(--accent-deep); }
+  .effort .h { background: var(--accent); }
+
+  /* ===== feasibility stacked stats (inside a figbox) ===== */
+  .feasibility-stack { display: grid; gap: 14px; }
+  .fstat {
+    border-top: 1.5px solid var(--ink);
+    padding: 14px 0 8px;
+  }
+  .fstat .lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 6px;
+  }
+  .fstat .k {
+    font-family: "Source Serif 4", serif;
+    font-weight: 380; font-size: 54px; line-height: 1.02;
+    letter-spacing: -.04em; color: var(--ink);
+  }
+  .fstat .k em { color: var(--accent-deep); font-style: italic; }
+  .fstat .k .denom { color: var(--ink-3); font-size: .5em; }
+  .fstat p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+  .fstat p em { color: var(--ink); font-style: italic; }
+
+  .mono { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .02em; }
+
+  /* ===== ribbon ===== */
+  .ribbon {
+    background: var(--ink); color: var(--paper);
+    padding: 10px 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  /* ===== conclusion 2x2 grid ===== */
+  .conclusion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .ccard {
+    background: var(--paper); border: 1px solid var(--hairline);
+    padding: 18px 18px 20px;
+    border-radius: 4px;
+  }
+  .ccard.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .ccard .label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 10px;
+  }
+  .ccard.dark .label { color: rgba(244,243,248,.7); }
+  .ccard h4 {
+    font-family: "Source Serif 4", serif;
+    font-variation-settings: "opsz" 36;
+    font-weight: 500;
+    font-size: 20px; line-height: 1.18;
+    margin: 0 0 8px; color: var(--ink);
+  }
+  .ccard.dark h4 { color: var(--paper); }
+  .ccard h4 em { font-style: italic; }
+  .ccard.dark h4 em { color: inherit; }
+  .ccard p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--text-soft); }
+  .ccard.dark p { color: rgba(244,243,248,.75); }
+
+  /* ===== key links list ===== */
+  .key-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    border-top: 1px solid var(--ink);
+    padding-top: 16px;
+    margin-top: 20px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .key-links span {
+    color: var(--ink);
+    font-weight: 600;
+    margin-right: 8px;
+  }
+
+  /* ===== tool stack (2-col mono list) ===== */
+  .tool-stack {
+    border-top: 1px solid var(--ink);
+    margin-top: 22px;
+    padding-top: 14px;
+  }
+  .tool-stack .tool-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .tool-stack .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 14px;
+  }
+  .tool-stack a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+  .tool-stack a:hover { color: var(--accent-deep); }
+  .tool-stack .tool {
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--text-soft);
+  }
+  .tool-stack .tool strong {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  /* ===== voice quote wall (e.g., user-research panels) ===== */
+  .voice-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 8px;
+    margin: 26px 0 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .voice-head strong { color: var(--ink); font-weight: 600; }
+
+  .voice-group {
+    margin-top: 20px;
+  }
+  .voice-group:first-of-type { margin-top: 0; }
+  .voice-group .gh {
+    display: flex; align-items: center; gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .voice-group .gh .swatch {
+    display: inline-block;
+    width: 22px; height: 3px;
+  }
+  .voice-group .gh .count {
+    color: var(--ink-3);
+    letter-spacing: .14em;
+    margin-left: auto;
+    font-size: 9.5px;
+  }
+  .voice-group .quotes {
+    display: grid;
+    gap: 10px 14px;
+  }
+  .voice-group.cols-2 .quotes { grid-template-columns: 1fr 1fr; }
+  .voice-group.cols-3 .quotes { grid-template-columns: 1fr 1fr 1fr; }
+
+  .qcard {
+    margin: 0;
+    padding: 11px 13px 12px 15px;
+    border-left: 3px solid var(--ink-3);
+    background: rgba(255,255,255,0.45);
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text-soft);
+    border-radius: 0 4px 4px 0;
+  }
+  .qcard.accept { border-left-color: var(--accent); }
+  .qcard.cost   { border-left-color: var(--warning); }
+  .qcard.trap   { border-left-color: var(--accent-deep); }
+  .qcard.ask    { border-left-color: var(--ink); }
+  .qcard .qtag {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-style: normal;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 5px;
+  }
+  .qcard.accept .qtag { color: var(--accent-deep); }
+  .qcard.cost   .qtag { color: var(--warning); }
+  .qcard.trap   .qtag { color: var(--accent-deep); }
+  .qcard.ask    .qtag { color: var(--ink); }
+
+  @media (max-width: 980px) {
+    .voice-group.cols-3 .quotes,
+    .voice-group.cols-2 .quotes { grid-template-columns: 1fr; }
+  }
+
+  /* ===== colophon ===== */
+  .colophon {
+    max-width: 1180px;
+    margin: 64px auto 56px;
+    padding: 28px 32px 0;
+    border-top: 1.5px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .colophon a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink-3); }
+
+  /* ===== responsive ===== */
+  @media (max-width: 980px) {
+    .spread { grid-template-columns: 1fr; gap: 32px; padding: 56px 0 48px; }
+    .stats, .stats.cols-3 { grid-template-columns: repeat(2, 1fr); }
+    .conclusion-grid { grid-template-columns: 1fr; }
+    .tool-stack .tool-grid { grid-template-columns: 1fr; }
+    .top-tag { display: none; }
+    .masthead { padding-top: 56px; padding-bottom: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress"><div class="bar" id="bar"></div></div>
+<a class="brand-chip" href="#masthead" aria-label="Deck home">
+  <span><strong>PROJECT</strong> <span class="sub">deck</span></span>
+</a>
+<div class="top-tag" id="topTag">§ — Masthead</div>
+<div class="nav-hint" id="navHint"><kbd>←</kbd><kbd>→</kbd> &nbsp;navigate pages</div>
+<div class="page-indicator" id="pageIndicator">01<span class="sep">/</span>01</div>
+
+<!-- =============================== MASTHEAD =============================== -->
+<header class="masthead" id="masthead">
+  <div class="mast-meta">
+    <span><span class="dot"></span>Group / venue · Topic line</span>
+    <span>Spring 2026</span>
+  </div>
+
+  <div class="spread">
+    <div class="spread-fig">
+      <div class="mast-mark">
+        <!-- Optional: drop a project mark / hero figure here, or leave blank. -->
+      </div>
+    </div>
+
+    <div class="spread-text">
+      <div class="mast-eyebrow">A research design brief</div>
+      <h1 class="mast-title">Deck Title,<br/>with an <em>italic</em> accent.</h1>
+      <p class="mast-sub">A short sub-title in italic that previews the argument.</p>
+      <div class="mast-byline"><strong>Author Name</strong> · Affiliation · 2026</div>
+    </div>
+  </div>
+</header>
+
+<!-- =============================== DOCUMENT =============================== -->
+<article class="doc">
+
+<!-- ====== §1 — Problem · spec list ====== -->
+<section class="spread" id="problem" data-tag="§1 · The problem">
+  <h2 class="run-title">The pipeline breaks in <em>three</em> places.</h2>
+  <div class="spread-fig">
+    <div class="figbox">
+      <div class="figbox-head"><strong>Fig. 1 · The problem space</strong><span>where things break</span></div>
+      <!-- Inline SVG kept simple on purpose: replace with your own. -->
+      <svg viewBox="0 0 460 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="p1-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <rect x="40" y="60" width="120" height="60" fill="#f1eee6" stroke="#1a1a1a" stroke-width="1.4"/>
+        <text x="100" y="86" text-anchor="middle" font-family="Source Serif 4, serif" font-size="16" fill="#1a1a1a">input</text>
+        <text x="100" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing=".16em" fill="#7a7a92">CIRCUIT</text>
+
+        <rect x="180" y="60" width="120" height="60" fill="#f1eee6" stroke="#a55b3a" stroke-width="1.6" stroke-dasharray="5 5"/>
+        <text x="240" y="86" text-anchor="middle" font-family="Source Serif 4, serif" font-size="16" fill="#1a1a1a">today's tool</text>
+        <text x="240" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing=".16em" fill="#a55b3a">LEAKY</text>
+
+        <rect x="320" y="60" width="100" height="60" fill="#1a1a1a"/>
+        <text x="370" y="86" text-anchor="middle" font-family="Source Serif 4, serif" font-size="16" fill="#f1eee6">output?</text>
+        <text x="370" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing=".16em" fill="#f1eee6">UNCERTAIN</text>
+
+        <line x1="160" y1="90" x2="178" y2="90" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#p1-arr)"/>
+        <line x1="300" y1="90" x2="318" y2="90" stroke="#a55b3a" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#p1-arr)"/>
+
+        <text x="230" y="170" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing=".22em" fill="#7a7a92">THREE WAYS THE PATH BREAKS</text>
+
+        <g font-family="Source Serif 4, serif" font-size="13" fill="#1a1a1a">
+          <circle cx="100" cy="220" r="6" fill="#a55b3a"/>
+          <text x="118" y="225">scope drifts</text>
+          <circle cx="230" cy="220" r="6" fill="#a55b3a"/>
+          <text x="248" y="225">tooling fragments</text>
+          <circle cx="370" cy="220" r="6" fill="#a55b3a"/>
+          <text x="388" y="225">no closed loop</text>
+        </g>
+      </svg>
+      <p class="figbox-cap">A short, descriptive caption. Refer to the figure (<em>"the dashed box"</em>) rather than re-stating it.</p>
+    </div>
+  </div>
+  <div class="spread-text">
+    <p class="run-lead">Lead with the claim. One short sentence that says what's wrong, in plain words.</p>
+    <ol class="spec">
+      <li>
+        <strong>First failure.</strong>
+        One-sentence elaboration: what symptom does this produce?
+        <div class="tag">→ keyword for this failure</div>
+      </li>
+      <li>
+        <strong>Second failure.</strong>
+        Different angle — orthogonal to the first.
+        <div class="tag">→ another keyword</div>
+      </li>
+      <li>
+        <strong>Third failure.</strong>
+        The one that motivates the whole talk.
+        <div class="tag">→ the punch line</div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ====== §2 — Model · stats + rail-pull ====== -->
+<section class="spread" id="model" data-tag="§2 · The model">
+  <h2 class="run-title">Two coupled cycles, one <em>quality gate</em>.</h2>
+  <div class="spread-fig">
+    <div class="figbox">
+      <div class="figbox-head"><strong>Fig. 2 · The model</strong><span>two cycles · one gate</span></div>
+      <!-- Drop a wide SVG/image here that takes up most of the column. -->
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="60" x2="760" y2="60" stroke="#1a1a1a" stroke-width="1"/>
+        <text x="40"  y="48" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing=".15em" fill="#7a7a92">0:00</text>
+        <text x="760" y="48" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing=".15em" fill="#7a7a92" text-anchor="end">END</text>
+
+        <rect x="40"  y="100" width="160" height="80" fill="#a55b3a"/>
+        <rect x="200" y="100" width="440" height="80" fill="#8a4527"/>
+        <rect x="640" y="100" width="120" height="80" fill="#1a1a1a"/>
+
+        <text x="120" y="138" text-anchor="middle" font-family="Source Serif 4, serif" font-size="17" fill="#f1eee6">phase A</text>
+        <text x="420" y="138" text-anchor="middle" font-family="Source Serif 4, serif" font-size="17" fill="#f1eee6">phase B — the main work</text>
+        <text x="700" y="138" text-anchor="middle" font-family="Source Serif 4, serif" font-size="17" fill="#f1eee6">phase C</text>
+
+        <text x="120" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing=".18em" fill="#1a1a1a">SHORT GATE</text>
+        <text x="420" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing=".18em" fill="#1a1a1a">LONG, PARALLEL</text>
+        <text x="700" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing=".18em" fill="#1a1a1a">RECAP</text>
+      </svg>
+      <p class="figbox-cap">A simple timeline figure works well here. Anything more elaborate goes into its own section.</p>
+    </div>
+  </div>
+  <div class="spread-text">
+    <p class="run-lead">One sentence that names the model in one line.</p>
+    <div class="stats">
+      <div class="stat"><div class="k">3</div><div class="lbl">Stages per cycle</div></div>
+      <div class="stat"><div class="k"><em>30</em><sup>min</sup></div><div class="lbl">Closed-book gate</div></div>
+      <div class="stat"><div class="k">12</div><div class="lbl">Weeks per run</div></div>
+      <div class="stat"><div class="k"><em>1</em></div><div class="lbl">Instructor in the loop</div></div>
+    </div>
+    <div class="rail-pull">The model is not the artifact. It's the coupling between the two cycles.</div>
+  </div>
+</section>
+
+<!-- ====== §3 — Data table + numbers ====== -->
+<section class="spread" id="evidence" data-tag="§3 · Evidence">
+  <h2 class="run-title">Time moves into the <em>machine</em>.</h2>
+  <div class="spread-fig">
+    <div class="figbox">
+      <div class="figbox-head"><strong>Fig. 3 · Time inputs</strong><span>before · after</span></div>
+      <table class="data">
+        <thead>
+          <tr><th>Weekly time</th><th style="text-align:right;">Before</th><th style="text-align:right;">After</th></tr>
+        </thead>
+        <tbody>
+          <tr class="group"><td colspan="3">Centralized</td></tr>
+          <tr><td>Lecture</td><td class="num">3 h</td><td class="num">0 h</td></tr>
+          <tr><td>Closed-book test</td><td class="num">0 h</td><td class="num">30 min</td></tr>
+          <tr><td>Discussion</td><td class="num">0 h</td><td class="num">20 min</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>Student total</td><td class="num">4 h / wk</td><td class="num" style="color:var(--accent-deep);">50 min / wk</td></tr>
+        </tfoot>
+        <tbody>
+          <tr class="group"><td colspan="3">Recurring</td></tr>
+          <tr><td>Instructor total</td><td class="num">7–10 h</td><td class="num" style="color:var(--accent-deep);">4–5 h</td></tr>
+          <tr><td>TA total</td><td class="num">3–6 h</td><td class="num">3 h</td></tr>
+        </tbody>
+      </table>
+      <p class="figbox-cap">Use table totals to anchor the headline number. Accent color carries the punch line.</p>
+    </div>
+  </div>
+  <div class="spread-text">
+    <p class="run-lead">Assigned student time drops from <strong>4 h</strong> to <strong>50 min</strong>; recurring instructor time follows.</p>
+    <p class="run-body">A short paragraph that explains how to read the table. Tell the reader what the eye should land on first.</p>
+    <div class="rail-pull deep">The total isn't squeezed from the human. It's relocated to the machine.</div>
+  </div>
+</section>
+
+<!-- ====== §4 — Feasibility stack + ink rail ====== -->
+<section class="spread" id="feasibility" data-tag="§4 · Feasibility">
+  <h2 class="run-title">It produced <em>mostly correct</em> work.</h2>
+  <div class="spread-fig">
+    <div class="figbox">
+      <div class="figbox-head"><strong>Fig. 4 · Feasibility</strong><span>three measurements</span></div>
+      <div class="feasibility-stack">
+        <div class="fstat">
+          <div class="lbl">Quality A</div>
+          <div class="k"><em>12</em><span class="denom"> / 18</span></div>
+          <p>One-sentence story behind the number.</p>
+        </div>
+        <div class="fstat">
+          <div class="lbl">Quality B</div>
+          <div class="k"><em>96.3<span style="font-size:.5em;">%</span></em></div>
+          <p>Another sentence, different angle.</p>
+        </div>
+        <div class="fstat">
+          <div class="lbl">Quality C</div>
+          <div class="k"><em>partial</em><span class="denom"> + comment</span></div>
+          <p>A non-numeric value if that's what the data says.</p>
+        </div>
+      </div>
+      <p class="figbox-cap">Big italic numerals in accent. The denominator stays grey so it doesn't fight the lead value.</p>
+    </div>
+  </div>
+  <div class="spread-text">
+    <p class="run-lead">Lead with what was achieved, then qualify.</p>
+    <p class="run-body">Two or three sentences of nuance. Mention the failure mode that the loop is supposed to absorb.</p>
+    <div class="rail-pull ink">A specific moment that made the trade-off visible. The reader remembers the anecdote, not the average.</div>
+  </div>
+</section>
+
+<!-- ====== §5 — Conclusion · 2x2 cards + voice quotes ====== -->
+<section class="spread" id="conclusion" data-tag="§5 · Conclusion">
+  <h2 class="run-title">The basic exchange <em>held</em>.</h2>
+  <div class="spread-fig">
+    <div class="figbox">
+      <div class="figbox-head"><strong>Fig. 5 · The exchange in four directions</strong><span>audience · author · field · you</span></div>
+      <div class="conclusion-grid">
+        <div class="ccard">
+          <div class="label">For the audience</div>
+          <h4>A clear path, a fair check.</h4>
+          <p>One sentence that the audience can repeat.</p>
+        </div>
+        <div class="ccard">
+          <div class="label">For the author</div>
+          <h4>A scalable <em>harness</em>.</h4>
+          <p>What you got out of building it.</p>
+        </div>
+        <div class="ccard">
+          <div class="label">For the field</div>
+          <h4>A copy-able pattern.</h4>
+          <p>Reuse the harness; replace the topic.</p>
+        </div>
+        <div class="ccard dark">
+          <div class="label">Try it</div>
+          <h4><a href="#" style="color:inherit; text-decoration:none;">Repo / link</a></h4>
+          <p>One CTA. One link. End on action.</p>
+        </div>
+      </div>
+      <p class="figbox-cap">The dark card is the call to action. The other three name the audiences.</p>
+
+      <div class="voice-head"><strong>Voices from the field</strong><span>positive · honest · asks</span></div>
+
+      <div class="voice-group cols-3">
+        <div class="gh">
+          <span class="swatch" style="background: var(--accent);"></span>
+          <span>What worked</span>
+          <span class="count">3 / 18</span>
+        </div>
+        <div class="quotes">
+          <blockquote class="qcard accept">
+            <span class="qtag">rhythm</span>
+            "An anonymized quote from a user or reviewer that names a specific outcome."
+          </blockquote>
+          <blockquote class="qcard accept">
+            <span class="qtag">depth</span>
+            "Another quote in the same category, different angle."
+          </blockquote>
+          <blockquote class="qcard accept">
+            <span class="qtag">control</span>
+            "A third quote — three quotes balances visually in a 3-col layout."
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="voice-group cols-2">
+        <div class="gh">
+          <span class="swatch" style="background: var(--warning);"></span>
+          <span>Honest cost</span>
+          <span class="count">2 / 18</span>
+        </div>
+        <div class="quotes">
+          <blockquote class="qcard cost">
+            <span class="qtag">pressure</span>
+            "A quote that names the cost — naming it builds credibility."
+          </blockquote>
+          <blockquote class="qcard cost">
+            <span class="qtag">weighting</span>
+            "A second cost quote."
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="voice-group cols-2">
+        <div class="gh">
+          <span class="swatch" style="background: var(--accent-deep);"></span>
+          <span>Named trap</span>
+          <span class="count">2 / 18</span>
+        </div>
+        <div class="quotes">
+          <blockquote class="qcard trap">
+            <span class="qtag">reliance</span>
+            "A quote that names a failure mode you observed."
+          </blockquote>
+          <blockquote class="qcard trap">
+            <span class="qtag">surprise</span>
+            "A second trap quote."
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="voice-group cols-3">
+        <div class="gh">
+          <span class="swatch" style="background: var(--ink);"></span>
+          <span>Asks — what to add next</span>
+          <span class="count">3 / 18</span>
+        </div>
+        <div class="quotes">
+          <blockquote class="qcard ask">
+            <span class="qtag">more examples</span>
+            "A direct user ask — keep verbatim so the audience hears it."
+          </blockquote>
+          <blockquote class="qcard ask">
+            <span class="qtag">illustrate</span>
+            "A second ask."
+          </blockquote>
+          <blockquote class="qcard ask">
+            <span class="qtag">videos</span>
+            "A third ask."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spread-text">
+    <p class="run-lead">One memorable sentence. Repeat the contribution in fewer words than the masthead used.</p>
+    <p class="run-body">Two to four sentences that explain why the pattern is reusable — and what's still open.</p>
+    <span class="ribbon">One headline phrase.</span>
+    <p class="run-body" style="margin-top: 20px;">A line that scopes the claim — sample size, caveats — so the audience leaves with calibrated confidence.</p>
+    <div class="key-links">
+      <div><span>Site</span><a href="#">project site URL</a></div>
+      <div><span>Repo</span><a href="#">code repo URL</a></div>
+      <div><span>Paper</span><a href="#">preprint URL</a></div>
+    </div>
+  </div>
+</section>
+
+</article>
+
+<footer class="colophon">
+  <span>Author · Venue · 2026</span>
+  <span><a href="#">project</a> · <a href="#">repo</a></span>
+</footer>
+
+<script>
+(function () {
+  const bar = document.getElementById('bar');
+  const topTag = document.getElementById('topTag');
+  const indicator = document.getElementById('pageIndicator');
+  const navHint = document.getElementById('navHint');
+  const masthead = document.getElementById('masthead');
+  const sections = Array.from(document.querySelectorAll('section.spread[data-tag]'));
+  const pages = [masthead, ...sections];
+  const pad = (n) => String(n).padStart(2, '0');
+  const total = pages.length;
+
+  function currentIndex() {
+    const probe = window.scrollY + 40;
+    let idx = 0;
+    for (let i = 0; i < pages.length; i++) {
+      if (pages[i].offsetTop <= probe) idx = i;
+      else break;
+    }
+    return idx;
+  }
+
+  function update() {
+    const idx = currentIndex();
+    const pct = total > 1 ? (idx / (total - 1)) * 100 : 0;
+    bar.style.width = pct + '%';
+    indicator.innerHTML = pad(idx + 1) + '<span class="sep">/</span>' + pad(total);
+    if (idx === 0) {
+      topTag.textContent = '§ — Masthead';
+      topTag.style.opacity = '0';
+    } else {
+      topTag.style.opacity = '1';
+      topTag.textContent = sections[idx - 1].dataset.tag;
+    }
+  }
+
+  function goTo(i) {
+    i = Math.max(0, Math.min(total - 1, i));
+    pages[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target && e.target.matches && e.target.matches('input, textarea, [contenteditable="true"]')) return;
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ':
+        e.preventDefault();
+        goTo(currentIndex() + 1);
+        break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        goTo(currentIndex() - 1);
+        break;
+      case 'Home':
+        e.preventDefault();
+        goTo(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        goTo(total - 1);
+        break;
+    }
+  });
+
+  let hinted = false;
+  function dismissHint() {
+    if (hinted) return;
+    hinted = true;
+    navHint.classList.add('fade');
+  }
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
+      dismissHint();
+    }
+  });
+  setTimeout(dismissHint, 8000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{SITE_TITLE}}</title>
+  <meta name="description" content="{{SITE_DESCRIPTION}}">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a class="brand" href="index.html">
+        <span class="brand-name">{{SITE_SLUG}}<span class="sub">{{SITE_KIND}}</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link active">Documents</a>
+        <a href="{{SOURCE_URL}}" class="nav-link external" target="_blank" rel="noopener">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-eyebrow">{{HERO_EYEBROW}}</div>
+      <h1>{{HERO_TITLE}}</h1>
+      <p class="hero-subtitle">
+        {{HERO_SUBTITLE}}
+      </p>
+      <div class="hero-meta" role="tablist" aria-label="Group">
+        {{HERO_TABS}}
+      </div>
+    </section>
+
+    <div id="sections"></div>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <span>{{SITE_COPYRIGHT}}</span>
+      <span>Built locally · Deployed via <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const DATA = {{DATA_JSON}};
+    const root = document.getElementById('sections');
+
+    function renderGroup(group) {
+      root.innerHTML = '';
+      const sections = DATA.groups[group];
+      if (!sections) return;
+      const hasAny = DATA.sectionMeta.some(m => (sections[m.id] || []).length);
+      if (!hasAny) {
+        root.innerHTML = '<div class="empty-state">No files available for this group.</div>';
+        return;
+      }
+
+      for (const meta of DATA.sectionMeta) {
+        const docs = sections[meta.id] || [];
+        if (!docs.length) continue;
+
+        const sec = document.createElement('section');
+        sec.id = `${group}-${meta.id}`;
+
+        const head = document.createElement('div');
+        head.className = 'section-head';
+        head.innerHTML = `<span class="section-title">${meta.title}</span>`;
+        sec.appendChild(head);
+
+        if (meta.desc) {
+          const desc = document.createElement('p');
+          desc.className = 'section-desc';
+          desc.textContent = meta.desc;
+          sec.appendChild(desc);
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'doc-grid';
+        for (const doc of docs) {
+          const card = document.createElement('a');
+          card.className = 'doc-card';
+          card.href = doc.href;
+          if (doc.download) card.setAttribute('download', '');
+          card.innerHTML = `
+            <span class="doc-kind">${doc.kind}</span>
+            <span class="doc-body">
+              <span class="doc-title">${doc.title}</span>
+              <span class="doc-desc">${doc.desc}</span>
+            </span>
+            <span class="doc-arrow" aria-hidden="true">
+              ${doc.download
+                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>'
+                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'}
+            </span>
+          `;
+          grid.appendChild(card);
+        }
+        sec.appendChild(grid);
+        root.appendChild(sec);
+      }
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    function activate(group) {
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.group === group ? 'true' : 'false'));
+      renderGroup(group);
+      try { history.replaceState(null, '', `#${group}`); } catch (_) {}
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        activate(tab.dataset.group);
+      });
+    });
+
+    const initial = (location.hash || '').replace('#', '');
+    activate(DATA.groups[initial] ? initial : DATA.default);
+  </script>
+</body>
+</html>

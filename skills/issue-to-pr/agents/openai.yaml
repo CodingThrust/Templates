@@ -1,0 +1,4 @@
+interface:
+  display_name: "Issue to PR"
+  short_description: "Turn a GitHub issue into a plan-only PR after brainstorming the approach"
+  default_prompt: "Use $issue-to-pr to convert a GitHub issue into a plan-only pull request."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Hygiene Audit"
+  short_description: "Beginner-friendly repository health scorecard"
+  default_prompt: "Use $repo-hygiene-audit to audit this repository for basic software development best-practice violations."
